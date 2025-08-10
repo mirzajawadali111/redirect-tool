@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Redirect Tool</title>
 
   <!-- Google Analytics -->
@@ -15,7 +15,7 @@
   </script>
 </head>
 <body>
-  <h1>Checking link...</h1>
+  <h1>Redirecting...</h1>
 
   <script>
     // URLs list
@@ -26,21 +26,24 @@
       "jawad": "https://inclinedallusionnearby.com/fw0wekkf?key=9c1ae361f094bc93d70f1ff7ee340c8f"
     };
 
-    // Get username from URL (?user=...)
+    // Get username from query parameter ?user=
     const params = new URLSearchParams(window.location.search);
-    const user = params.get("user")?.toLowerCase();
+    const user = params.get('user')?.toLowerCase();
 
     if (user && urls[user]) {
       document.body.innerHTML = "<h1>Loading...</h1>";
 
-      // Track event in Google Analytics
+      // Track click event
       gtag('event', 'redirect_click', {
         'event_category': 'Redirect',
         'event_label': user
       });
 
-      // Instant redirect
-      window.location.href = urls[user];
+      // Give GA ~200ms to send hit, then redirect
+      setTimeout(() => {
+        window.location.href = urls[user];
+      }, 200);
+
     } else {
       document.body.innerHTML = "<h1>Link not found</h1>";
     }
