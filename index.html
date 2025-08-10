@@ -13,7 +13,6 @@
     gtag('js', new Date());
     gtag('config', 'G-23H221SD7E');
   </script>
-
 </head>
 <body>
   <h1>Checking link...</h1>
@@ -27,27 +26,21 @@
       "jawad": "https://inclinedallusionnearby.com/fw0wekkf?key=9c1ae361f094bc93d70f1ff7ee340c8f"
     };
 
-    // Get username from URL path OR query string
-    let username = window.location.pathname.replace("/", "").toLowerCase();
-    if (!username) {
-      const params = new URLSearchParams(window.location.search);
-      username = params.get("user") ? params.get("user").toLowerCase() : "";
-    }
+    // Get username from URL (?user=...)
+    const params = new URLSearchParams(window.location.search);
+    const user = params.get("user")?.toLowerCase();
 
-    // Redirect logic
-    if (username && urls[username]) {
+    if (user && urls[user]) {
       document.body.innerHTML = "<h1>Loading...</h1>";
 
-      // Track in Google Analytics
+      // Track event in Google Analytics
       gtag('event', 'redirect_click', {
         'event_category': 'Redirect',
-        'event_label': username
+        'event_label': user
       });
 
-      // Redirect after short delay
-      setTimeout(() => {
-        window.location.href = urls[username];
-      }, 500);
+      // Instant redirect
+      window.location.href = urls[user];
     } else {
       document.body.innerHTML = "<h1>Link not found</h1>";
     }
