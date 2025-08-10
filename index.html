@@ -4,7 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Redirecting...</title>
-  <script src="script.js" defer></script>
+  <script>
+    // Apna user list yaha define karo
+    const users = {
+      "mirzajawad": "https://maltitrendz.site/",
+      "ahmadahmadmaqsood": "https://www.google.com",
+      "sameerjutt": "https://www.facebook.com"
+    };
+
+    // Get ?user= from URL
+    const params = new URLSearchParams(window.location.search);
+    const username = params.get("user");
+
+    // Redirect if found, else show message
+    if (username && users[username]) {
+      window.location.replace(users[username]);
+    } else {
+      document.write("<h1>Link not found</h1>");
+    }
+  </script>
 </head>
 <body>
   <p>Redirecting...</p>
