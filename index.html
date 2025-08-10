@@ -27,21 +27,27 @@
       "jawad": "https://inclinedallusionnearby.com/fw0wekkf?key=9c1ae361f094bc93d70f1ff7ee340c8f"
     };
 
-    // Get username from URL
-    const path = window.location.pathname.replace("/", "").toLowerCase();
+    // Get username from URL path OR query string
+    let username = window.location.pathname.replace("/", "").toLowerCase();
+    if (!username) {
+      const params = new URLSearchParams(window.location.search);
+      username = params.get("user") ? params.get("user").toLowerCase() : "";
+    }
 
-    if (path && urls[path]) {
+    // Redirect logic
+    if (username && urls[username]) {
       document.body.innerHTML = "<h1>Loading...</h1>";
 
-      // Track event in Google Analytics
+      // Track in Google Analytics
       gtag('event', 'redirect_click', {
         'event_category': 'Redirect',
-        'event_label': path
+        'event_label': username
       });
 
+      // Redirect after short delay
       setTimeout(() => {
-        window.location.href = urls[path];
-      }, 500); // 0.5 second delay
+        window.location.href = urls[username];
+      }, 500);
     } else {
       document.body.innerHTML = "<h1>Link not found</h1>";
     }
